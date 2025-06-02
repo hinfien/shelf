@@ -1,0 +1,92 @@
+#header {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-medium) var(--spacing-large);
+}
+
+#header #left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#left>svg {
+    fill: var(--surface-invert-color);
+}
+
+#name {
+    color: var(--text-primary-color);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+#header #right {
+    display: flex;
+    gap: 30px;
+}
+
+.typical-button {
+    letter-spacing: -0.42px;
+    height: 33px;
+    border-radius: 10px;
+    background-color: var(--surface-secondary-color);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--text-secondary-color);
+    border: 1px solid var(--surface-tertiary-color);
+    gap: 12px;
+    padding: 0px 14px;
+}
+
+.typical-button>svg {
+    fill: var(--text-secondary-color);
+}
+
+.typical-button:hover {
+    border: 1px solid #8CA1F1;
+}
+
+#theme-switches {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+#white,
+#dark {
+    appearance: none;
+    border-radius: 3px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--surface-tertiary-color);
+}
+
+#white:hover,
+#dark:hover {
+    cursor: pointer;
+    border: 1px solid #8CA1F1;
+}
+
+#white:checked,
+#dark:checked {
+    border: 2px solid #8CA1F1;
+}
+
+#white {
+    background-color: #FFF;
+}
+
+#dark {
+    background-color: #000;
+}
+
+button:hover {
+    cursor: pointer;
+}

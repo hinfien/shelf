@@ -1,0 +1,10 @@
+#footer {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-medium) var(--spacing-large);
+    gap: 33px;
+}
+
+#footer>a>svg {
+    fill: var(--text-secondary-color);
+}

@@ -1,0 +1,38 @@
+#main {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 40px
+}
+
+#shelf {
+    /* the biggest shelf ever */
+    width: 318px;
+    height: 383px;
+    display: flex;
+    flex-flow: column;
+    gap: 34px;
+    padding-top: 34px;
+    padding-left: 19px;
+    background-image: url("data:image/svg+xml,%3Csvg width='318' height='383' viewBox='0 0 318 383' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0.000488281H318V383H0V0.000488281Z' fill='%23D7D7D7' /%3E%3Cpath d='M15 15.0005V368H19V15.0005H15Z' fill='%23C6C6C6' /%3E%3Cpath d='M303 15.0005V368H299V15.0005H303Z' fill='%23C6C6C6' /%3E%3Cpath d='M303 136H15L18.9927 140H299.007L303 136Z' fill='%23D3D3D3' /%3E%3Cpath d='M303 15.0005H15L18.9927 19.0005H299.007L303 15.0005Z' fill='%23D3D3D3' /%3E%3Cpath d='M303 258H15L18.9927 262H299.007L303 258Z' fill='%23D3D3D3' /%3E%3Cpath d='M303 368H15L18.9927 364H299.007L303 368Z' fill='%23D3D3D3' /%3E%3Cpath d='M15 368H318V383H15V368Z' fill='%23E0E0E0' /%3E%3Cpath d='M15 242H318V258H15V242Z' fill='%23E0E0E0' /%3E%3Cpath d='M15 121H318V136H15V121Z' fill='%23E0E0E0' /%3E%3Cpath d='M15 0.000488281H318V15.0005H15V0.000488281Z' fill='%23E0E0E0' /%3E%3Cpath d='M0 0.000488281H15V383H0V0.000488281Z' fill='%23E0E0E0' /%3E%3Cpath d='M303 0.000488281H318V383H303V0.000488281Z' fill='%23E0E0E0' /%3E%3C/svg%3E");
+}
+
+#shelf>div {
+    /* rows */
+    display: flex;
+}
+
+#shelf>div>div {
+    /* shelf spots */
+    border: 1px solid red;
+    width: 28px;
+    height: 87px;
+}
+
+#shelf>div>div:hover {
+    /* shelf spots hover */
+    border: 1px solid red;
+    width: 28px;
+    height: 87px;
+}

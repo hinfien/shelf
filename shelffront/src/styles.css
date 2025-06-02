@@ -1,0 +1,122 @@
+/* You can add global styles to this file, and also import other style files */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+/* RESET END */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+    /* text variables */
+    --text-primary-color: #393939;
+    --text-secondary-color: #868686;
+    --text-tertiary-color: #B9B9B9;
+    --text-invert-color: #FAFAFA;
+    /* surface variables */
+    --surface-primary-color: #EDEDED;
+    --surface-secondary-color: #E0E0E0;
+    --surface-tertiary-color: #D3D3D3;
+    --surface-invert-color: #393939;
+    /* shelfbruh */
+    --shelf-1-color: #E0E0E0;
+    --shelf-2-color: #D3D3D3;
+    --shelf-3-color: #C6C6C6;
+    --shelf-4-color: #D7D7D7;
+    /* spacing */
+    --spacing-large: 120px;
+    --spacing-medium: 40px;
+}
+
+html.dark-theme {
+    /* text variables */
+    --text-primary-color: #393939;
+    --text-secondary-color: #393939;
+    --text-tertiary-color: #393939;
+    --text-invert-color: #393939;
+    /* surface variables */
+    --surface-primary-color: #393939;
+    --surface-secondary-color: #393939;
+    --surface-tertiary-color: #393939;
+    --surface-invert-color: #393939;
+    /* shelfbruh */
+    --shelf-1-color: #393939;
+    --shelf-2-color: #393939;
+    --shelf-3-color: #393939;
+    --shelf-4-color: #393939;
+}
+
+html {
+    text-decoration: none;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface-primary-color);
+    height: 1080px;
+}

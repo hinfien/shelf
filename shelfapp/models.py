@@ -8,16 +8,6 @@ AUTH_USER_MODEL = settings.AUTH_USER_MODEL
 
 
 class Book(models.Model):
-
-    author = models.CharField(max_length=200)
-    title = models.CharField(max_length=255)
-
-    owner = models.ForeignKey(
-        AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="books",
-    )
-
     book_file = models.FileField(
         upload_to="book_files/",
         null=True,
@@ -25,7 +15,7 @@ class Book(models.Model):
     )
 
     def __str__(self):
-        return f'"{self.title}" by {self.author}'
+        return self.book_file
 
 
 class ShelfSlot(models.Model):
@@ -35,7 +25,6 @@ class ShelfSlot(models.Model):
         related_name="shelf_slots",
     )
 
-    # Location on the shelf, restricted to 1-30
     location = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(30)],
         unique=True,
@@ -55,4 +44,4 @@ class ShelfSlot(models.Model):
     def __str__(self):
         book_title = self.book.title if self.book else "Empty"
         owner_username = self.owner.username
-        return f"Slot {self.location} ({self.color}) for {owner_username} - Contains: {book_title}"
+        return self.location, self.color, owner_username, book_title

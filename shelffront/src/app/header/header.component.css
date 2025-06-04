@@ -10,6 +10,10 @@
     gap: 8px;
 }
 
+#header #left:hover {
+    cursor: default;
+}
+
 #left>svg {
     fill: var(--surface-invert-color);
 }

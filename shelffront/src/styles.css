@@ -108,15 +108,19 @@ html.dark-theme {
 }
 
 html {
-    text-decoration: none;
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+    height: 100%;
 }
 
 body {
     display: flex;
     flex-direction: column;
     background-color: var(--surface-primary-color);
-    height: 1080px;
+    height: 100%;
+}
+
+app-root {
+    flex-grow: 1;
 }

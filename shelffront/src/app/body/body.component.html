@@ -1,40 +1,40 @@
 <div id="main">
     <div id="shelf">
-        <div id="first-row">
-            <div id="1"></div>
-            <div id="2"></div>
-            <div id="3"></div>
-            <div id="4"></div>
-            <div id="5"></div>
-            <div id="6"></div>
-            <div id="7"></div>
-            <div id="8"></div>
-            <div id="9"></div>
-            <div id="10"></div>
-        </div>
-        <div id="second-row">
-            <div id="11"></div>
-            <div id="12"></div>
-            <div id="13"></div>
-            <div id="14"></div>
-            <div id="15"></div>
-            <div id="16"></div>
-            <div id="17"></div>
-            <div id="18"></div>
-            <div id="19"></div>
-            <div id="20"></div>
-        </div>
-        <div id="third-row">
-            <div id="21"></div>
-            <div id="22"></div>
-            <div id="23"></div>
-            <div id="24"></div>
-            <div id="25"></div>
-            <div id="26"></div>
-            <div id="27"></div>
-            <div id="28"></div>
-            <div id="29"></div>
-            <div id="30"></div>
+        <div class="book" *ngFor="let book of books">
+            <div *ngIf="book.status=='none'" class="none" (click)="onNothingClick(book)"
+                [style.cursor]="isAuthenticated ? 'pointer' : 'not-allowed'">
+                <div class="inner_none">+</div>
+            </div>
+            <div *ngIf="book.status==='creation'" class="creation">
+                <div class="creation-popup">
+                    <button class="close-btn" (click)="closeCreationPopup(book)">×</button>
+                    <div class="color-picker">
+                        <span class="color-dot gray" [class.selected]="book.color === 'gray'"
+                            (click)="changeColor(book, 'gray')"></span>
+                        <span class="color-dot blue" [class.selected]="book.color === 'blue'"
+                            (click)="changeColor(book, 'blue')"></span>
+                        <span class="color-dot green" [class.selected]="book.color === 'green'"
+                            (click)="changeColor(book, 'green')"></span>
+                        <span class="color-dot red" [class.selected]="book.color === 'red'"
+                            (click)="changeColor(book, 'red')"></span>
+                    </div>
+                    <div class="upload-section">
+                        <button class="upload-btn" (click)="fileUpload(book)">
+                            <svg width="11" height="11" viewBox="0 0 11 11" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1.375 11C0.996874 11 0.673291 10.8618 0.40425 10.5854C0.135208 10.309 0.000458333 9.97639 0 9.58748V8.17496C0 7.97485 0.066 7.80724 0.198 7.6721C0.33 7.53697 0.493166 7.46917 0.687499 7.4687C0.881833 7.46823 1.04523 7.53603 1.17769 7.6721C1.31014 7.80818 1.37592 7.9758 1.375 8.17496V9.58748H9.62499V8.17496C9.62499 7.97485 9.69099 7.80724 9.82299 7.6721C9.95499 7.53697 10.1182 7.46917 10.3125 7.4687C10.5068 7.46823 10.6702 7.53603 10.8027 7.6721C10.9351 7.80818 11.0009 7.9758 11 8.17496V9.58748C11 9.97592 10.8655 10.3086 10.5964 10.5854C10.3274 10.8623 10.0036 11.0005 9.62499 11H1.375ZM4.8125 2.41895L3.52343 3.74319C3.38593 3.88444 3.22277 3.95224 3.03393 3.94659C2.8451 3.94094 2.68171 3.86725 2.54375 3.72553C2.41771 3.58428 2.35171 3.41948 2.34575 3.23115C2.33979 3.04281 2.40579 2.87802 2.54375 2.73677L5.01875 0.194232C5.0875 0.123606 5.16197 0.0736971 5.24218 0.044505C5.32239 0.015313 5.40833 0.000481705 5.5 1.08657e-05C5.59166 -0.000459974 5.6776 0.0143713 5.75781 0.044505C5.83802 0.0746387 5.91249 0.124548 5.98124 0.194232L8.45624 2.73677C8.59374 2.87802 8.65974 3.04281 8.65424 3.23115C8.64874 3.41948 8.58274 3.58428 8.45624 3.72553C8.31874 3.86678 8.15558 3.94047 7.96674 3.94659C7.77791 3.95271 7.61451 3.88491 7.47656 3.74319L6.18749 2.41895V7.4687C6.18749 7.66881 6.12149 7.83666 5.98949 7.97227C5.85749 8.10787 5.69433 8.17543 5.5 8.17496C5.30566 8.17449 5.1425 8.10669 5.0105 7.97156C4.8785 7.83643 4.8125 7.66881 4.8125 7.4687V2.41895Z"
+                                    fill="#D3D3D3" />
+                            </svg>
+                            <span>upload a file</span>
+                        </button>
+                        <input type="file" #fileInput style="display: none" (change)="onFileUpload($event, book)">
+                    </div>
+                    <button class="create-btn" (click)="confirmCreation(book)">+</button>
+                </div>
+            </div>
+            <div *ngIf="book.status=='loading'" class="loading">loading</div>
+            <div *ngIf="book.status=='uploaded'" class="uploaded">uploaded</div>
         </div>
     </div>
 </div>

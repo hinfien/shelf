@@ -1,3 +1,10 @@
+:host {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #main {
     display: flex;
     flex-grow: 1;
@@ -10,17 +17,19 @@
     /* the biggest shelf ever */
     width: 318px;
     height: 383px;
-    display: flex;
-    flex-flow: column;
+    display: grid;
     gap: 34px;
-    padding-top: 34px;
-    padding-left: 19px;
+    padding: 34px 19px 0px 19px;
+    grid-template-columns: repeat(10, 28px);
+    grid-template-rows: repeat(3, 87px);
+    grid-column-gap: 0px;
+    grid-row-gap: 34px;
     background-image: url("data:image/svg+xml,%3Csvg width='318' height='383' viewBox='0 0 318 383' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0.000488281H318V383H0V0.000488281Z' fill='%23D7D7D7' /%3E%3Cpath d='M15 15.0005V368H19V15.0005H15Z' fill='%23C6C6C6' /%3E%3Cpath d='M303 15.0005V368H299V15.0005H303Z' fill='%23C6C6C6' /%3E%3Cpath d='M303 136H15L18.9927 140H299.007L303 136Z' fill='%23D3D3D3' /%3E%3Cpath d='M303 15.0005H15L18.9927 19.0005H299.007L303 15.0005Z' fill='%23D3D3D3' /%3E%3Cpath d='M303 258H15L18.9927 262H299.007L303 258Z' fill='%23D3D3D3' /%3E%3Cpath d='M303 368H15L18.9927 364H299.007L303 368Z' fill='%23D3D3D3' /%3E%3Cpath d='M15 368H318V383H15V368Z' fill='%23E0E0E0' /%3E%3Cpath d='M15 242H318V258H15V242Z' fill='%23E0E0E0' /%3E%3Cpath d='M15 121H318V136H15V121Z' fill='%23E0E0E0' /%3E%3Cpath d='M15 0.000488281H318V15.0005H15V0.000488281Z' fill='%23E0E0E0' /%3E%3Cpath d='M0 0.000488281H15V383H0V0.000488281Z' fill='%23E0E0E0' /%3E%3Cpath d='M303 0.000488281H318V383H303V0.000488281Z' fill='%23E0E0E0' /%3E%3C/svg%3E");
 }
 
 #shelf>div {
-    /* rows */
-    display: flex;
+    /* books divs from ngfor */
+    display: inline-flex;
 }
 
 #shelf>div>div {
@@ -30,9 +39,33 @@
     height: 87px;
 }
 
-#shelf>div>div:hover {
-    /* shelf spots hover */
-    border: 1px solid red;
-    width: 28px;
-    height: 87px;
+/* BOOK STATUSES */
+.none {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.none:hover {
+    cursor: pointer;
+}
+
+.inner_none {
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    width: 24px;
+    height: 83px;
+    font-size: 22px;
+    font-weight: 300;
+    border: 1px dashed var(--surface-invert-color);
+    color: var(--surface-invert-color);
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.1s ease-in;
+}
+
+.none:hover .inner_none {
+    visibility: visible;
+    opacity: 1;
 }

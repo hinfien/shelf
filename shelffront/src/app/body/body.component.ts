@@ -11,6 +11,8 @@ export class BodyComponent {
   books: Book[] = [];
   isAuthenticated: boolean = true;
   isCreationProcess: boolean = false;
+  isColorPickerOpened: boolean = false;
+  isFileChosen: boolean = false;
 
   constructor() {
     for (let i = 0; i < 30; i++) {
@@ -20,41 +22,37 @@ export class BodyComponent {
   }
 
   onNothingClick(book: Book) {
-    console.log(book);
-    console.log('isAuthenticated', this.isAuthenticated, 'isCreationProcess', this.isCreationProcess);
-
     if (this.isAuthenticated && !this.isCreationProcess) {
       this.isCreationProcess = true;
       book.status = 'creation';
-      console.log('changed creation:', book);
     }
   }
 
-  closeCreationPopup(book: Book) {
-    console.log('closed', book)
+  cancelCreationPopup(book: Book) {
     this.isCreationProcess = false;
+    this.isFileChosen = false;
     book.status = 'none';
   }
 
+  onColorClick() {
+    this.isColorPickerOpened = !this.isColorPickerOpened;
+  }
+
   changeColor(book: Book, color: string) {
-    console.log('book', book, 'color', color)
+    console.log('book', book, 'color', color);
     book.color = color;
   }
 
   fileUpload(book: Book) {
-    console.log('file upload')
-
+    console.log('file upload');
   }
 
   onFileUpload(event: Event, book: Book) {
-    console.log('onfileupload called', event)
+    console.log('onfileupload called', event);
   }
 
   confirmCreation(book: Book) {
-    //if (bookLink)
-    console.log('creation ', book)
-    book.status = 'loading'
+
+    book.status = 'loading';
   }
-
-
 }

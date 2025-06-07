@@ -13,12 +13,12 @@ export class BodyComponent {
   isCreationProcess: boolean = false;
   isColorPickerOpened: boolean = false;
   isFileChosen: boolean = false;
+  activeColor: string = 'gray';
 
   constructor() {
     for (let i = 0; i < 30; i++) {
       this.books.push(new Book("gray", "none", "none"));
     }
-    console.log(this.books)
   }
 
   onNothingClick(book: Book) {
@@ -39,11 +39,12 @@ export class BodyComponent {
   }
 
   changeColor(book: Book, color: string) {
-    console.log('book', book, 'color', color);
     book.color = color;
+    console.log(book.color)
   }
 
   fileUpload(book: Book) {
+    this.isFileChosen = true;
     console.log('file upload');
   }
 
@@ -52,7 +53,8 @@ export class BodyComponent {
   }
 
   confirmCreation(book: Book) {
-
+    this.isCreationProcess = false;
+    this.isFileChosen = false;
     book.status = 'loading';
   }
 }

@@ -5,6 +5,10 @@
     gap: 33px;
 }
 
-#footer>a>svg {
+svg>path {
     fill: var(--text-secondary-color);
+}
+
+svg:hover path {
+    fill: var(--text-primary-color);
 }

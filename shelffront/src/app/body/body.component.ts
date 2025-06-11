@@ -1,5 +1,7 @@
-import { Component, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Book } from '../models/book.model';
+import * as localforage from 'localforage';
+
 
 @Component({
   selector: 'app-body',
@@ -7,7 +9,7 @@ import { Book } from '../models/book.model';
   styleUrls: ['./body.component.css']
 })
 
-export class BodyComponent {
+export class BodyComponent implements OnInit {
   books: Book[] = [];
   isAuthenticated: boolean = true;
   isColorPickerOpened: boolean = false;
@@ -15,14 +17,16 @@ export class BodyComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor() {
-    this.loadLocal();
+  constructor() { }
+
+  async ngOnInit(): Promise<void> {
+    await this.loadLocal();
 
     if (this.books.length === 0) {
       for (let i = 0; i < 30; i++) {
         this.books.push(new Book("gray", "none", i.toString(), null, null, null));
       }
-      this.saveLocal();
+      await this.saveLocal();
     }
   }
 
@@ -35,50 +39,59 @@ export class BodyComponent {
   }
 
   @HostListener('window:keydown', ['$event'])
-  onBackspace(event: KeyboardEvent) {
+  async onBackspace(event: KeyboardEvent): Promise<void> {
     if (event.key === 'Backspace' && this.hoveredBookId) {
-      let bookToDelete = this.books.find(b => b.id === this.hoveredBookId);
+      let toDelete = this.books.find(b => b.id === this.hoveredBookId);
 
-      if (bookToDelete && bookToDelete.status !== 'none') {
-        this.resetBook(bookToDelete);
+      if (toDelete && toDelete.status !== 'none') {
+        await this.resetBook(toDelete);
       }
 
       this.hoveredBookId = null;
     }
   }
 
-  saveLocal() {
-    const booksToStore = this.books.map(book => {
+  async saveLocal(): Promise<void> {
+    let booksToStore = this.books.map(book => {
       return {
         id: book.id,
         color: book.color,
         status: book.status,
         fileName: book.fileName,
-        fileUrl: book.fileUrl,
       };
     });
-    localStorage.setItem("skibidi", JSON.stringify(booksToStore));
+
+    await localforage.setItem('brrpatapim', booksToStore);
   }
 
-  loadLocal() {
-    const localBooks = localStorage.getItem("skibidi");
+  async loadLocal() {
+    const localBooks = await localforage.getItem<any[]>('brrpatapim');
 
     if (localBooks) {
-      const storedBookDataArray = JSON.parse(localBooks);
-      this.books = storedBookDataArray.map((data: any) => new Book(
-        data.color,
-        data.status,
-        data.id,
-        null,
-        data.fileName,
-        data.fileUrl,
-      ));
+      this.books = await Promise.all(localBooks.map(async (data: any) => {
+        const book = new Book(
+          data.color,
+          data.status,
+          data.id,
+          null,
+          data.fileName,
+          null,
+        );
+
+        let file = await localforage.getItem<File>(book.id);
+        if (file) {
+          book.selectedFile = file;
+          book.fileUrl = URL.createObjectURL(file);
+        }
+
+        return book;
+      }));
     } else {
       this.books = [];
     }
   }
 
-  resetBook(book: Book) {
+  async resetBook(book: Book): Promise<void> {
     if (book.fileUrl) {
       URL.revokeObjectURL(book.fileUrl);
     }
@@ -92,43 +105,49 @@ export class BodyComponent {
     if (this.fileInput?.nativeElement) {
       this.fileInput.nativeElement.value = '';
     }
-    this.saveLocal();
+
+    await localforage.removeItem(book.id);
+
+    await this.saveLocal();
   }
 
-  onNothingClick(book: Book) {
-    this.books.forEach(book => {
-      if (book.status === 'creation') {
-        this.resetBook(book);
+  async onNothingClick(book: Book): Promise<void> {
+    for (let b of this.books) {
+      if (b.status === 'creation') {
+        await this.resetBook(b);
       }
-    });
+    }
+
 
     book.status = 'creation';
     book.color = 'gray';
     book.selectedFile = null;
     book.fileName = null;
+    this.isColorPickerOpened = false;
+
     if (book.fileUrl) {
       URL.revokeObjectURL(book.fileUrl);
-      book.fileUrl = null;
     }
-    this.isColorPickerOpened = false;
+
+    await localforage.removeItem(book.id);
 
     this.saveLocal();
   }
 
-  cancelCreationPopup(book: Book) {
-    this.resetBook(book);
+  async cancelCreationPopup(book: Book) {
+    await this.resetBook(book);
   }
 
   onColorClick() {
     this.isColorPickerOpened = !this.isColorPickerOpened;
   }
 
-  changeColor(book: Book, color: string) {
+  async changeColor(book: Book, color: string) {
     book.color = color;
-    this.saveLocal();
+    await this.saveLocal();
   }
 
-  onFileSelected(event: Event, book: Book) {
+  async onFileSelected(event: Event, book: Book): Promise<void> {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
@@ -138,13 +157,17 @@ export class BodyComponent {
       if (book.fileUrl) {
         URL.revokeObjectURL(book.fileUrl);
       }
+
       book.fileUrl = URL.createObjectURL(file);
+
+      await localforage.setItem(book.id, book.selectedFile);
     }
 
     if (this.fileInput?.nativeElement) {
       this.fileInput.nativeElement.value = '';
     }
-    this.saveLocal();
+
+    await this.saveLocal();
   }
 
   confirmCreation(book: Book) {

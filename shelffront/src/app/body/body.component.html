@@ -95,7 +95,8 @@
                     </button>
                 </div>
             </div>
-            <div *ngIf="book.status=='uploaded'" class="uploaded" (click)="openBookLink(book)">
+            <div *ngIf="book.status=='uploaded'" class="uploaded" (click)="openBookLink(book)"
+                (mouseenter)="mouseEnter(book.id)" (mouseleave)="mouseLeave()">
                 <svg width="28" height="87" viewBox="0 0 28 87" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 9H28V87H0V9Z" [ngClass]="book.color" />
                     <path d="M0 0H3V9H0V0Z" [ngClass]="book.color" />

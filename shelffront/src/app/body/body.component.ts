@@ -11,6 +11,7 @@ export class BodyComponent {
   books: Book[] = [];
   isAuthenticated: boolean = true;
   isColorPickerOpened: boolean = false;
+  hoveredBookId: string | null = null;
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -25,7 +26,28 @@ export class BodyComponent {
     }
   }
 
-  private saveLocal(): void {
+  mouseEnter(bookId: string) {
+    this.hoveredBookId = bookId;
+  }
+
+  mouseLeave() {
+    this.hoveredBookId = null;
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onBackspace(event: KeyboardEvent) {
+    if (event.key === 'Backspace' && this.hoveredBookId) {
+      let bookToDelete = this.books.find(b => b.id === this.hoveredBookId);
+
+      if (bookToDelete && bookToDelete.status !== 'none') {
+        this.resetBook(bookToDelete);
+      }
+
+      this.hoveredBookId = null;
+    }
+  }
+
+  saveLocal() {
     const booksToStore = this.books.map(book => {
       return {
         id: book.id,
@@ -38,7 +60,7 @@ export class BodyComponent {
     localStorage.setItem("skibidi", JSON.stringify(booksToStore));
   }
 
-  private loadLocal(): void {
+  loadLocal() {
     const localBooks = localStorage.getItem("skibidi");
 
     if (localBooks) {
@@ -106,7 +128,7 @@ export class BodyComponent {
     this.saveLocal();
   }
 
-  onFileSelected(event: Event, book: Book): void {
+  onFileSelected(event: Event, book: Book) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];

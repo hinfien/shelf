@@ -91,20 +91,20 @@ h6 {
 
 html.dark-theme {
     /* text variables */
-    --text-primary-color: #393939;
-    --text-secondary-color: #393939;
-    --text-tertiary-color: #393939;
-    --text-invert-color: #393939;
+    --text-primary-color: #C6C6C6;
+    --text-secondary-color: #797979;
+    --text-tertiary-color: #464646;
+    --text-invert-color: #050505;
     /* surface variables */
-    --surface-primary-color: #393939;
-    --surface-secondary-color: #393939;
-    --surface-tertiary-color: #393939;
-    --surface-invert-color: #393939;
+    --surface-primary-color: #121212;
+    --surface-secondary-color: #1F1F1F;
+    --surface-tertiary-color: #2C2C2C;
+    --surface-invert-color: #C6C6C6;
     /* shelfbruh */
-    --shelf-1-color: #393939;
+    --shelf-1-color: #1F1F1F;
     --shelf-2-color: #393939;
-    --shelf-3-color: #393939;
-    --shelf-4-color: #393939;
+    --shelf-3-color: #2C2C2C;
+    --shelf-4-color: #282828;
 }
 
 html {

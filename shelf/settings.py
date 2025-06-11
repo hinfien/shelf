@@ -67,7 +67,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "http://localhost:4200/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "http://localhost:4200/"
 
 ROOT_URLCONF = "shelf.urls"
 

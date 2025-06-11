@@ -1,5 +1,21 @@
 <div id="main">
     <div id="shelf">
+        <svg class="shelf-svg-background" width="318" height="383" viewBox="0 0 318 383" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0.000488281H318V383H0V0.000488281Z" fill="var(--shelf-4-color)" />
+            <path d="M15 15.0005V368H19V15.0005H15Z" fill="var(--shelf-3-color)" />
+            <path d="M303 15.0005V368H299V15.0005H303Z" fill="var(--shelf-3-color)" />
+            <path d="M303 136H15L18.9927 140H299.007L303 136Z" fill="var(--shelf-2-color)" />
+            <path d="M303 15.0005H15L18.9927 19.0005H299.007L303 15.0005Z" fill="var(--shelf-2-color)" />
+            <path d="M303 258H15L18.9927 262H299.007L303 258Z" fill="var(--shelf-2-color)" />
+            <path d="M303 368H15L18.9927 364H299.007L303 368Z" fill="var(--shelf-2-color)" />
+            <path d="M15 368H318V383H15V368Z" fill="var(--shelf-1-color)" />
+            <path d="M15 242H318V258H15V242Z" fill="var(--shelf-1-color)" />
+            <path d="M15 121H318V136H15V121Z" fill="var(--shelf-1-color)" />
+            <path d="M15 0.000488281H318V15.0005H15V0.000488281Z" fill="var(--shelf-1-color)" />
+            <path d="M0 0.000488281H15V383H0V0.000488281Z" fill="var(--shelf-1-color)" />
+            <path d="M303 0.000488281H318V383H303V0.000488281Z" fill="var(--shelf-1-color)" />
+        </svg>
         <div class="book" *ngFor="let book of books">
             <div *ngIf="book.status=='none'" class="none" (click)="onNothingClick(book)"
                 [style.cursor]="isAuthenticated ? 'pointer' : 'not-allowed'">
@@ -7,14 +23,14 @@
             </div>
             <div *ngIf="book.status==='creation'" class="creation">
                 <svg width="28" height="87" viewBox="0 0 28 87" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 9H28V87H0V9Z" fill="#DEDEDE" [ngClass]="book.color" />
-                    <path d="M0 0H3V9H0V0Z" fill="#DEDEDE" [ngClass]="book.color" />
-                    <path d="M25 0H28V9H25V0Z" fill="#DEDEDE" [ngClass]="book.color" />
-                    <path d="M3 1H25V9H3V1Z" fill="#FAFAFA" />
-                    <path d="M0 0H3V87H0V0Z" fill="black" fill-opacity="0.05" />
-                    <path d="M3 9H25V12H3V9Z" fill="black" fill-opacity="0.05" />
-                    <path d="M3 84H25V87H3V84Z" fill="black" fill-opacity="0.05" />
-                    <path d="M25 0H28V87H25V0Z" fill="black" fill-opacity="0.1" />
+                    <path d="M0 9H28V87H0V9Z" [ngClass]="book.color" />
+                    <path d="M0 0H3V9H0V0Z" [ngClass]="book.color" />
+                    <path d="M25 0H28V9H25V0Z" [ngClass]="book.color" />
+                    <path d="M3 1H25V9H3V1Z" fill="#e9e9e9" />
+                    <path d="M0 0H3V87H0V0Z" fill="black" fill-opacity="0.07" />
+                    <path d="M3 9H25V12H3V9Z" fill="black" fill-opacity="0.07" />
+                    <path d="M3 84H25V87H3V84Z" fill="black" fill-opacity="0.07" />
+                    <path d="M25 0H28V87H25V0Z" fill="black" fill-opacity="0.12" />
                 </svg>
                 <div class="creation-popup">
                     <!-- cancel btn -->
@@ -33,38 +49,43 @@
                             </svg>
                         </div>
                         <div class="color-pickers" *ngIf="isColorPickerOpened">
-                            <input type="radio" id="white" name="colors" value="" checked class="color-picker gray"
-                                (click)="changeColor(book, 'gray')" />
-                            <input type="radio" id="dark" name="colors" value="" class="color-picker red"
-                                (click)="changeColor(book, 'red')" />
-                            <input type="radio" id="white" name="colors" value="" class="color-picker blue"
-                                (click)="changeColor(book, 'blue')" />
-                            <input type="radio" id="dark" name="colors" value="" class="color-picker green"
-                                (click)="changeColor(book, 'green')" />
+                            <input type="radio" id="gray" name="colors" value="" class="color-picker gray"
+                                (click)="changeColor(book, 'gray')"
+                                [ngClass]="{'checked-color-picker': book.color === 'gray'}" />
+                            <input type="radio" id="red" name="colors" value="" class="color-picker red"
+                                (click)="changeColor(book, 'red')"
+                                [ngClass]="{'checked-color-picker': book.color === 'red'}" />
+                            <input type="radio" id="blue" name="colors" value="" class="color-picker blue"
+                                (click)="changeColor(book, 'blue')"
+                                [ngClass]="{'checked-color-picker': book.color === 'blue'}" />
+                            <input type="radio" id="green" name="colors" value="" class="color-picker green"
+                                (click)="changeColor(book, 'green')"
+                                [ngClass]="{'checked-color-picker': book.color === 'green'}" />
                         </div>
                     </div>
                     <!-- upload button -->
-                    <button class="upload-btn" (click)="fileUpload(book)"
-                        [ngClass]="isFileChosen ? 'uploaded-btn' : 'not-uploaded-btn'">
-                        <svg *ngIf="!isFileChosen" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                    <button class="upload-btn" (click)="fileInput.click()"
+                        [ngClass]="book.selectedFile ? 'uploaded-btn' : 'not-uploaded-btn'">
+                        <svg *ngIf="!book.selectedFile" width="11" height="11" viewBox="0 0 11 11" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M1.375 11C0.996874 11 0.673291 10.8618 0.40425 10.5854C0.135208 10.309 0.000458333 9.97639 0 9.58748V8.17496C0 7.97485 0.066 7.80724 0.198 7.6721C0.33 7.53697 0.493166 7.46917 0.687499 7.4687C0.881833 7.46823 1.04523 7.53603 1.17769 7.6721C1.31014 7.80818 1.37592 7.9758 1.375 8.17496V9.58748H9.62499V8.17496C9.62499 7.97485 9.69099 7.80724 9.82299 7.6721C9.95499 7.53697 10.1182 7.46917 10.3125 7.4687C10.5068 7.46823 10.6702 7.53603 10.8027 7.6721C10.9351 7.80818 11.0009 7.9758 11 8.17496V9.58748C11 9.97592 10.8655 10.3086 10.5964 10.5854C10.3274 10.8623 10.0036 11.0005 9.62499 11H1.375ZM4.8125 2.41895L3.52343 3.74319C3.38593 3.88444 3.22277 3.95224 3.03393 3.94659C2.8451 3.94094 2.68171 3.86725 2.54375 3.72553C2.41771 3.58428 2.35171 3.41948 2.34575 3.23115C2.33979 3.04281 2.40579 2.87802 2.54375 2.73677L5.01875 0.194232C5.0875 0.123606 5.16197 0.0736971 5.24218 0.044505C5.32239 0.015313 5.40833 0.000481705 5.5 1.08657e-05C5.59166 -0.000459974 5.6776 0.0143713 5.75781 0.044505C5.83802 0.0746387 5.91249 0.124548 5.98124 0.194232L8.45624 2.73677C8.59374 2.87802 8.65974 3.04281 8.65424 3.23115C8.64874 3.41948 8.58274 3.58428 8.45624 3.72553C8.31874 3.86678 8.15558 3.94047 7.96674 3.94659C7.77791 3.95271 7.61451 3.88491 7.47656 3.74319L6.18749 2.41895V7.4687C6.18749 7.66881 6.12149 7.83666 5.98949 7.97227C5.85749 8.10787 5.69433 8.17543 5.5 8.17496C5.30566 8.17449 5.1425 8.10669 5.0105 7.97156C4.8785 7.83643 4.8125 7.66881 4.8125 7.4687V2.41895Z" />
                         </svg>
-                        <span *ngIf="!isFileChosen">upload</span>
+                        <span *ngIf="!book.selectedFile">upload</span>
                         <!-- another state dawg -->
-                        <svg *ngIf="isFileChosen" width="11" height="9" viewBox="0 0 11 9" fill="none"
+                        <svg *ngIf="book.selectedFile" width="11" height="9" viewBox="0 0 11 9" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                 d="M10.7446 0.688048C11.0546 0.962048 11.0836 1.43605 10.8096 1.74805L5.05962 8.24805C4.99322 8.32313 4.91243 8.38414 4.82205 8.42747C4.73167 8.47081 4.63351 8.49558 4.53339 8.50034C4.43327 8.50509 4.33321 8.48973 4.23912 8.45516C4.14504 8.42058 4.05884 8.3675 3.98562 8.29905L0.235621 4.79905C0.0913583 4.66309 0.00678598 4.47556 0.000390831 4.27743C-0.00600432 4.0793 0.0662979 3.8867 0.201493 3.74173C0.336688 3.59675 0.523779 3.5112 0.72187 3.50376C0.919961 3.49633 1.11294 3.56762 1.25862 3.70205L4.44862 6.67205L9.68862 0.752048C9.75395 0.678142 9.83322 0.617849 9.92189 0.574624C10.0106 0.531398 10.1069 0.506088 10.2053 0.500143C10.3038 0.494198 10.4025 0.507735 10.4957 0.539979C10.5889 0.572222 10.6749 0.622539 10.7486 0.688048H10.7446Z"
                                 fill="#868686" />
                         </svg>
-                        <span *ngIf="isFileChosen">uploaded</span>
+                        <span *ngIf="book.selectedFile">uploaded</span>
                     </button>
-                    <input type="file" #fileInput style="display: none" (change)="onFileUpload($event, book)">
+                    <input type="file" #fileInput style="display: none" (change)="onFileSelected($event, book)"
+                        accept=".pdf">
                     <!-- create buton -->
                     <button class="create-btn"
-                        [ngClass]="isFileChosen ? 'available-create-btn' : 'unavailable-create-btn'"
+                        [ngClass]="book.selectedFile ? 'available-create-btn' : 'unavailable-create-btn'"
                         (click)="confirmCreation(book)">
                         <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -74,10 +95,18 @@
                     </button>
                 </div>
             </div>
-            <div *ngIf="book.status=='loading'" class="loading">
-                CHINAZES
+            <div *ngIf="book.status=='uploaded'" class="uploaded" (click)="openBookLink(book)">
+                <svg width="28" height="87" viewBox="0 0 28 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 9H28V87H0V9Z" [ngClass]="book.color" />
+                    <path d="M0 0H3V9H0V0Z" [ngClass]="book.color" />
+                    <path d="M25 0H28V9H25V0Z" [ngClass]="book.color" />
+                    <path d="M3 1H25V9H3V1Z" fill="#e9e9e9" />
+                    <path d="M0 0H3V87H0V0Z" fill="black" fill-opacity="0.1" />
+                    <path d="M3 9H25V12H3V9Z" fill="black" fill-opacity="0.1" />
+                    <path d="M3 84H25V87H3V84Z" fill="black" fill-opacity="0.1" />
+                    <path d="M25 0H28V87H25V0Z" fill="black" fill-opacity="0.2" />
+                </svg>
             </div>
-            <div *ngIf="book.status=='uploaded'" class="uploaded">uploaded</div>
         </div>
     </div>
 </div>

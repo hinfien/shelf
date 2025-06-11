@@ -2,8 +2,11 @@ export class Book {
     constructor(
         public color: string,
         // gray, red, green, blue
-        public bookLink: string,
         public status: string,
-        // none, creation, loading, uploaded
+        // none, creation, uploaded
+        public id: string,
+        public selectedFile: File | null,
+        public fileName: string | null,
+        public fileUrl: string | null
     ) { }
 }

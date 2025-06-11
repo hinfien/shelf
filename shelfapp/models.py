@@ -38,9 +38,6 @@ class ShelfSlot(models.Model):
 
     color = models.CharField(max_length=50)
 
-    class Meta:
-        ordering = ["owner", "location"]
-
     def __str__(self):
         book_title = self.book.title if self.book else "Empty"
         owner_username = self.owner.username

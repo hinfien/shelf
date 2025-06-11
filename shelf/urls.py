@@ -21,5 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    # path("api/upload-book/", upload_book_view, name="upload_book_api"),
+    # path("api/auth/status/", auth_status_view, name="auth_status_api"),
     path("", include("shelfapp.urls")),
 ]
